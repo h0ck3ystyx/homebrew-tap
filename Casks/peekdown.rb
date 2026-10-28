@@ -16,6 +16,28 @@ cask "peekdown" do
 
   app "Peekdown.app"
 
+  postflight do
+    system_command "pluginkit",
+                   args: ["-a", "#{appdir}/Peekdown.app/Contents/PlugIns/PreviewExtension.appex"],
+                   sudo: false,
+                   print_stderr: false
+    system_command "pluginkit",
+                   args: ["-a", "#{appdir}/Peekdown.app/Contents/PlugIns/ThumbnailExtension.appex"],
+                   sudo: false,
+                   print_stderr: false
+    system_command "open",
+                   args: ["-g", "-j", "#{appdir}/Peekdown.app"],
+                   sudo: false,
+                   print_stderr: false
+    system "qlmanage", "-r"
+    system "qlmanage", "-r", "cache"
+  end
+
+  uninstall_postflight do
+    system "qlmanage", "-r"
+    system "qlmanage", "-r", "cache"
+  end
+
   zap trash: [
     "~/Library/Containers/com.markdownpreview.app",
     "~/Library/Containers/com.markdownpreview.app.preview",
@@ -24,17 +46,10 @@ cask "peekdown" do
 
   caveats do
     <<~EOS
-      To activate the Quick Look extensions:
-
-      1. Launch Peekdown.app once to register the extensions with macOS
-      2. Enable the extensions under:
-         System Settings → General → Login Items & Extensions → Quick Look
-      3. Optionally, restart Quick Look with:
-         qlmanage -r
-         qlmanage -r cache
-
-      After activation, you can preview Markdown files by selecting them in
-      Finder and pressing the Space bar.
+      The Quick Look extensions have been registered automatically.
+      
+      If Markdown previews don't work immediately, enable the extensions under:
+      System Settings → General → Login Items & Extensions → Quick Look
     EOS
   end
 end
