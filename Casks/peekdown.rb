@@ -1,6 +1,6 @@
 cask "peekdown" do
-  version "1.0.3"
-  sha256 "92c962d0553789a22874cf744ae274b8a12854ce566386f68acaa5e4b467b910"
+  version "1.0.4"
+  sha256 "2e1d5e7c55d7b9c4fe17d33da73c95ada5b2c384c78a768518f84edca153a0cb"
 
   url "https://github.com/h0ck3ystyx/peekdown/releases/download/v#{version}/Peekdown-#{version}.zip"
   name "Peekdown"
